@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import AuctionTable from './AuctionTable';
 import Timer from './Timer';
+import { Link } from "react-router-dom";
 
 const images = require.context('../../public/uploads', true);
 
@@ -49,6 +50,17 @@ export default function AuctionCard(props) {
          )
         .required('Value is required'),
     });
+
+    const deleteAuction = () => {
+      fetch(`${process.env.REACT_APP_API}/delete/auction/${auction._id}`)
+        .then(response => {
+          return response.json()
+        })
+        .then(data => {
+          console.log("deleted")
+          window.location.reload(false);
+        })
+    }
 
     const handleBid = async (bid, username) => {
       const currentBid = parseInt(auction?.Current_Bid);
@@ -122,6 +134,10 @@ export default function AuctionCard(props) {
     const minutes = Math.floor(timeLeft / 60000) % 60;
     const seconds = Math.floor(timeLeft / 1000) % 60;
 
+    const linkStyle = {
+      color: "white",
+      textDecoration: "none",
+    }
 
     return props?.data?
     (
@@ -210,6 +226,10 @@ export default function AuctionCard(props) {
                         </Grid>
                       </Form>}
                     </Formik>
+                    <Grid>
+                          <Link style={linkStyle} underline="none" to={`/auction/edit/${auction?._id}`}><Button>Edit</Button></Link>
+                          <Button onClick={()=>{deleteAuction()}}>Delete</Button>
+                        </Grid>
                 </Grid>
               </Grid>
               <Grid item>

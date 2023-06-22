@@ -51,6 +51,7 @@ export default function NegotiationCard(props) {
     const startNegotiation = async (value) => {
         const negotiationDate = new Date();
         setEndTime(negotiationDate.getTime() + 60000 * parseInt(negotiation?.Negotiation_Duration));
+        console.log(negotiationDate)
         const response = await fetch(`${process.env.REACT_APP_API}/edit/negotiation/${negotiation._id}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},

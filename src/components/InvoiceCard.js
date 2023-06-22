@@ -6,6 +6,8 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import moment from "moment";
 import * as React from 'react';
+import { useState,useEffect } from 'react';
+import CustomSlipModal from './CustomSlipModal';
 
 export default function InvoiceCard(props) {
     const invoiceData = props?.data
@@ -18,6 +20,35 @@ export default function InvoiceCard(props) {
       textAlign: 'center',
       color: theme.palette.text.secondary,
     }));
+
+    const handleInvoice = async (x) => {
+      const response = await fetch(`${process.env.REACT_APP_API}/edit/vehicle/${invoiceData?.Vehicle_Id}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          values: {Status: x ? "Accepted" : "Cancelled"}
+        })
+      })
+
+      await response.json();
+    }
+
+    const [vehicle, setVehicle] = useState({})
+
+    const fetchVehicle = () => {
+      fetch(`${process.env.REACT_APP_API}/vehicle/${invoiceData?.Vehicle_Id}`)
+        .then(response => {
+          return response.json()
+        })
+        .then(data => {
+          setVehicle(data.data)
+          console.log(data.data)
+        })
+    }
+
+    useEffect(() => {
+      fetchVehicle();
+  }, [])
 
     return (
       <Card>
@@ -55,7 +86,20 @@ export default function InvoiceCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Generate</Button>
+          {
+            vehicle ? vehicle?.Auction_Winner ? <CustomSlipModal username={vehicle?.Auction_Winner} /> :<></> : <></>
+          }
+         
+          
+          {
+            vehicle ? vehicle?.Auction_Winner ?<Button>{`Auction Won by ${vehicle?.Auction_Winner}`}</Button> : <>
+            <Button variant="contained" color="success" size="small" onClick={() => handleInvoice(1)}>Accept</Button>
+          <Button variant="contained" color="error" size="small" onClick={() => handleInvoice(0) }>Cancel</Button>
+            </> : <>
+            <Button variant="contained" color="success" size="small" onClick={() => handleInvoice(1)}>Accept</Button>
+          <Button variant="contained" color="error" size="small" onClick={() => handleInvoice(0) }>Cancel</Button>
+            </>
+          }
         </CardActions>
       </Card>
     )

@@ -59,6 +59,7 @@ export default function Timer(endTime, auction) {
       setTimeLeft(targetLeft);
 
       if (targetLeft === 0) {
+        console.log("sad")
         createNegotiation();
         clearInterval(timer);
       }

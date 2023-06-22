@@ -10,7 +10,11 @@ import AddImages from './pages/AddImages';
 import Auctions from './pages/Auctions';
 import Negotiations from './pages/Negotiations';
 import Invoices from './pages/Invoices';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import { useEffect, useState } from 'react';
+import EditAuction from './pages/EditAuction';
+import Accounts from './pages/Accounts';
+import Evaluations from './pages/Evaluations';
 
 const AdminRoutes = () => {
 
@@ -51,15 +55,20 @@ const AdminRoutes = () => {
     return (
         <Routes>
             <Route exact path='/' element={<Login/>} />
+            <Route exact path='/privacy-policy' element={<PrivacyPolicy/>} />
             <Route exact path='/dashboard' element={<RequireAuth><Dashboard/></RequireAuth>} />
             <Route exact path='/vehicle/add' element={<RequireAuth><AddVehicle/></RequireAuth>} />
             <Route exact path='/vehicle/edit/:id' element={<RequireAuth><EditVehicle/></RequireAuth>} />
             <Route exact path='/vehicles' element={<RequireAuth><Vehicles/></RequireAuth>} />
             <Route exact path='/auction/add' element={<RequireAuth><AddAuction/></RequireAuth>} />
+            <Route exact path='/auction/edit/:id' element={<RequireAuth><EditAuction/></RequireAuth>} />
             <Route exact path='/auctions' element={<RequireAuth><Auctions auctions={auctions}/></RequireAuth>} />
             <Route exact path='/negotiations' element={<RequireAuth><Negotiations negotiations={negotiations}/></RequireAuth>} />
             <Route exact path='/images/add' element={<RequireAuth><AddImages/></RequireAuth>} />
             <Route exact path='/invoices' element={<RequireAuth><Invoices/></RequireAuth>} />
+            
+            <Route exact path='/accounts' element={<RequireAuth><Accounts/></RequireAuth>} />
+            <Route exact path='/evaluations' element={<RequireAuth><Evaluations/></RequireAuth>} />
         </Routes>
     )
 };
