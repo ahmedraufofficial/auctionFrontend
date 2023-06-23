@@ -15,6 +15,9 @@ import { useEffect, useState } from 'react';
 import EditAuction from './pages/EditAuction';
 import Accounts from './pages/Accounts';
 import Evaluations from './pages/Evaluations';
+import Toc from './pages/Toc';
+import About from './pages/About';
+import Classifieds from './pages/Classifieds';
 
 const AdminRoutes = () => {
 
@@ -66,8 +69,10 @@ const AdminRoutes = () => {
             <Route exact path='/negotiations' element={<RequireAuth><Negotiations negotiations={negotiations}/></RequireAuth>} />
             <Route exact path='/images/add' element={<RequireAuth><AddImages/></RequireAuth>} />
             <Route exact path='/invoices' element={<RequireAuth><Invoices/></RequireAuth>} />
-            
+            <Route exact path='/toc' element={<RequireAuth><Toc/></RequireAuth>} />
+            <Route exact path='/about' element={<RequireAuth><About/></RequireAuth>} />
             <Route exact path='/accounts' element={<RequireAuth><Accounts/></RequireAuth>} />
+            <Route exact path='/classifieds' element={<RequireAuth><Classifieds/></RequireAuth>} />
             <Route exact path='/evaluations' element={<RequireAuth><Evaluations/></RequireAuth>} />
         </Routes>
     )

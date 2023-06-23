@@ -19,13 +19,11 @@ const pages =  localStorage.getItem('user') ? [
   {name:'Negotiations', url:'/negotiations'},
   {name:'Vehicles', url:'/vehicles'},
   {name:'Invoices', url:'/invoices'},
-  {name:'Accounts', url:'/accounts'},
   {name:'Add Vehicle', url:'/vehicle/add'},
   {name:'Add Auction', url:'/auction/add'},
   {name:'Add Images', url:'/images/add'},
-  {name:'Evaluations', url:'/evaluations'},
 ] : [];
-const settings = localStorage.getItem('user') ? ['Profile', 'Account', 'Dashboard', 'Logout'] : ['Sign In'];
+const settings = localStorage.getItem('user') ? ['Classifieds', 'Evaluations', 'Accounts','About', 'TOC','Dashboard'] : ['Sign In'];
 
 const Appbar = (data) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -165,9 +163,9 @@ const Appbar = (data) => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <Link  style={linkStyle} to={`/${setting.toLowerCase()}`}><MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
+                </MenuItem></Link>
               ))}
             </Menu>
           </Box>

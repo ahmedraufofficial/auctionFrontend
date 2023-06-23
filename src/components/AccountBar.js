@@ -36,11 +36,26 @@ export const AccountBar = ({data}) => {
         }
     }
 
+    const deactivate = async (x) => {
+        const response = await fetch(`${process.env.REACT_APP_API}/accounts/deactivate`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id: x
+            })
+        })
+        const data = await response.json()
+        if (data) {
+           setStatus('Inactive')
+        }
+    }
+
     return (
         <Box component={Paper} sx={{ width: '100%', padding: '20px', marginTop: '50px' }}>
             <Stack
                 direction={{ xs: 'column', sm: 'row' }}
-                spacing={{ xs: 1, sm: 2, md: 4 }}
+                style={{display: 'flex',
+                justifyContent: 'space-between',}}
             >
             <Item>
                 {data?.email}
@@ -57,12 +72,16 @@ export const AccountBar = ({data}) => {
                 {
                     status === 'Inactive' ? 
                     <Item>
-                        <Button onClick={()=>{activate(data?._id)}}>
+                        <Button style={{backgroundColor: 'green'}} onClick={()=>{activate(data?._id)}}>
                             Activate
                         </Button>
                     </Item>
                     :
-                    <></>
+                    <Item>
+                        <Button style={{backgroundColor: 'maroon'}} onClick={()=>{deactivate(data?._id)}}>
+                            Deactivate
+                        </Button>
+                    </Item>
                 }
             </Stack>
         </Box>
